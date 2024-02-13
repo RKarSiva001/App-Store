@@ -1,30 +1,23 @@
 // Write your code here
-import {Component} from 'react'
 import './index.css'
 
-class TabItem extends Component {
-  render() {
-    const {tabDetails, clickTabItem, isActive} = this.props
-    const {tabId, displayText} = tabDetails
+const TabItem = props => {
+  const {tabDetails, setActiveTabId, isActive} = props
+  const {tabId, displayText} = tabDetails
 
-    const onClickTabItem = () => {
-      clickTabItem(tabId)
-    }
-
-    const activeTabBtnClassName = isActive ? 'active-tab-btn' : ''
-
-    return (
-      <li className="tab-item-container ">
-        <button
-          type="button"
-          className={`tab-btn ${activeTabBtnClassName}`}
-          onClick={onClickTabItem}
-        >
-          {displayText}
-        </button>
-      </li>
-    )
+  const onClickTab = () => {
+    setActiveTabId(tabId)
   }
+
+  const tabBtnClassName = isActive ? 'tab-button active' : 'tab-button'
+
+  return (
+    <li className="tab-item">
+      <button type="button" onClick={onClickTab} className={tabBtnClassName}>
+        {displayText}
+      </button>
+    </li>
+  )
 }
 
 export default TabItem
