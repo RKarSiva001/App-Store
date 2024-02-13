@@ -307,9 +307,9 @@ class AppStore extends Component {
     this.setState({searchInput: event.target.value})
   }
 
-  getFilteredApps = () => {
+  getFilteredApps = searchResults => {
     const {activeTabId} = this.state
-    const filteredApps = appsList.filter(
+    const filteredApps = searchResults.filter(
       eachAppDetails => eachAppDetails.category === activeTabId,
     )
     return filteredApps
@@ -317,11 +317,10 @@ class AppStore extends Component {
 
   render() {
     const {activeTabId, searchInput} = this.state
-    const filteredApps = this.getFilteredApps()
-
     const searchResults = appsList.filter(eachApp =>
       eachApp.appName.toLowerCase().includes(searchInput.toLowerCase()),
     )
+    const filteredApps = this.getFilteredApps(searchResults)
 
     return (
       <div className="app-container">
@@ -345,20 +344,11 @@ class AppStore extends Component {
             />
           ))}
         </ul>
-
-        {searchInput ? (
-          <ul>
-            {searchResults.map(appDetails => (
-              <AppItem key={appDetails.appId} appDetails={appDetails} />
-            ))}
-          </ul>
-        ) : (
-          <ul className="app-list-container">
-            {filteredApps.map(appDetails => (
-              <AppItem key={appDetails.appId} appDetails={appDetails} />
-            ))}
-          </ul>
-        )}
+        <ul className="app-list-container">
+          {filteredApps.map(appDetails => (
+            <AppItem key={appDetails.appId} appDetails={appDetails} />
+          ))}
+        </ul>
       </div>
     )
   }
